@@ -35,6 +35,17 @@
     cursor: pointer;
     color: #454545;
 }
+.my-orders .feedback{
+    
+        border: none;
+        color: white;
+        background-color: #FF4C24;
+        width: max(15vw,200px);
+        padding: 12px 0px;
+        border-radius: 4px;
+        cursor: pointer;
+    
+}
 @media (max-width:900px) {
     .my-orders-order{
         grid-template-columns: 1fr 2fr 1fr;

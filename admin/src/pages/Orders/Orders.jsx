@@ -61,6 +61,7 @@ const Order = () => {
               </div>*/}
               <div className='order-item-address'>
                 <p>{order.address.table}</p>
+                <p>{order.address.instructions}</p>
               </div>
               <p className='order-item-phone'>{order.address.phone}</p>
             </div>

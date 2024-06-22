@@ -1,9 +1,19 @@
 .navbar{
     display: flex;
-    justify-content: space-between;
+    justify-content: left;
     align-items: center;
     padding: 8px 4%;
 }
-.navbar .logo{
-    width: max(10%,80px);
+ .title{
+    display: flex;
+    font-size: 40px;
+    justify-content: center;
+    padding-left: 50px;
+    
 }
+.navbar .logo{
+    width: 150px;
+    justify-content: left;
+    align-items: center;
+}
+

@@ -4,10 +4,13 @@ import { connectDB } from "./config/db.js"
 import foodRouter from "./routes/foodRoute.js"
 import cartRouter from "./routes/cartRoute.js"
 import userRouter from "./routes/userRoute.js"
+import feedbackRouter from './routes/feedbackRoute.js'
 import 'dotenv/config'
 import orderRouter from "./routes/orderRoute.js"
+import bodyParser from "body-parser"
 
-
+;
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 
 //app config
@@ -18,6 +21,7 @@ const port = 4000
 //req from frontend to backend is parsed using this
 app.use(express.json())
 app.use(cors())
+
 
 //db connection
 connectDB();
@@ -31,6 +35,7 @@ app.use("/images",express.static("uploads"))
 app.use("/api/user",userRouter)
 app.use("/api/cart", cartRouter)
 app.use("/api/order", orderRouter)
+app.use("/api/feedback",urlencodedParser,feedbackRouter)
 
 app.get("/", (req,res)=>{
     res.send("API Working")

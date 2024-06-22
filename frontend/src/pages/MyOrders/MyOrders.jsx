@@ -3,11 +3,13 @@ import './MyOrders.css'
 import axios from 'axios'
 import { StoreContext } from '../../context/storeContext';
 import { assets } from '../../assets/assets';
+import {useNavigate} from 'react-router-dom'
 
 const MyOrders = () => {
   
   const [data,setData] =  useState([]);
   const {url,token,currency} = useContext(StoreContext);
+  const navigate=useNavigate();
 
   const fetchOrders = async () => {
     const response = await axios.post(url+"/api/order/userorders",{},{headers:{token}});
@@ -44,6 +46,7 @@ const MyOrders = () => {
             </div>
           )
         })}
+        <button className='feedback' onClick={()=>navigate('/feedback')}>Feedback</button>
       </div>
     </div>
   )

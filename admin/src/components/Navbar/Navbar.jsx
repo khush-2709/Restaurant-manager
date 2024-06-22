@@ -4,9 +4,11 @@ import {assets} from '../../assets/assets'
 
 const Navbar = () => {
   return (
-    <div>
+    <div className='navbar'>
         <img className='logo' src={assets.logo} alt="" />
-        
+        <div className='title'>
+          <p >Admin Panel</p>
+        </div>
       
     </div>
   )

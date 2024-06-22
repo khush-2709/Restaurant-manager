@@ -6,12 +6,14 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 import { assets } from '../../assets/assets'
+import emailjs from 'emailjs-com'
 
 
 
 const PlaceOrder = () => {
 
   const [payment, setPayment] = useState("cod")
+  
 
   const {getTotalCartAmount, token, food_list,cartItems,url, setCartItems, currency, taxes} = useContext(StoreContext)
 const [data,setData] = useState({
@@ -20,7 +22,8 @@ const [data,setData] = useState({
   email: "",
   table: "",
   address: "",  
-  phone: ""
+  phone: "",
+  instructions:""
 })
 
 const navigate = useNavigate();
@@ -51,6 +54,19 @@ const placeOrder = async (event) => {
       if (response.data.success) {
           const { session_url } = response.data;
           window.location.replace(session_url);
+          const templateParams = {
+            user_name: data.firstName,
+            user_email: data.email,
+          };
+          emailjs.send('service_6w2lxuc', 'template_0u387jp', templateParams, 'ts17WeiCnn3l9wMtL')
+           .then((response) => {
+              console.log('Email sent successfully:', response.status, response.text);
+             alert('Email sent successfully!');
+            }, (error) => {
+              console.error('Failed to send email:', error);
+              alert('Failed to send email. Please try again later.');
+         });
+          
       }
       else {
           toast.error("Something Went Wrong")
@@ -59,9 +75,21 @@ const placeOrder = async (event) => {
   else{
       let response = await axios.post(url + "/api/order/placecod", orderData, { headers: { token } });
       if (response.data.success) {
-          //navigate("/myorders")
+          navigate("/myorders")
           toast.success(response.data.message)
           setCartItems({});
+          const templateParams = {
+            user_name: data.firstName,
+            user_email: data.email,
+          };
+          emailjs.send('service_6w2lxuc', 'template_0u387jp', templateParams, 'ts17WeiCnn3l9wMtL')
+           .then((response) => {
+              console.log('Email sent successfully:', response.status, response.text);
+             alert('Email sent successfully!');
+            }, (error) => {
+              console.error('Failed to send email:', error);
+              alert('Failed to send email. Please try again later.');
+         });
       }
       else {
           toast.error("Something Went Wrong")
@@ -96,6 +124,7 @@ const placeOrder = async (event) => {
           <input name='email'type='email' placeholder='Email address' onChange={onChangeHandler} value={data.email}  required />
           
           <input name='phone' type='text' placeholder='Phone No' onChange={onChangeHandler} value={data.phone}  required/>
+          <input name='instructions' type='paragraph' placeholder='Add special instructions' onChange={onChangeHandler} value={data.instructions} />
       </div>
       <div className="place-order-right">
       <div className="cart-total">
@@ -103,17 +132,17 @@ const placeOrder = async (event) => {
           <div>
             <div className="cart-total-details">
               <p>Subtotal</p>
-              <p>${getTotalCartAmount()}</p>
+              <p>Rs{getTotalCartAmount()}</p>
             </div>
             <hr />
             <div className="cart-total-details">
               <p>Taxes</p>
-              <p>${getTotalCartAmount()===0?0:5}</p>
+              <p>Rs{getTotalCartAmount()===0?0:50}</p>
             </div>
             <hr />
             <div className="cart-total-details">
               <b>Total</b>
-              <b>${getTotalCartAmount()===0?0:getTotalCartAmount()+5}</b>
+              <b>Rs{getTotalCartAmount()===0?0:getTotalCartAmount()+50}</b>
             </div>
           </div>
           
